@@ -12,6 +12,6 @@ push:
 	@docker push ${IMAGE}:latest
 
 deploy:
-	@docker stack deploy --resolve-image=never -c visualizer-stack.yml viz
+	@docker stack deploy --resolve-image=never -c docker-compose.yml viz
 
 .PHONY: all build push deploy

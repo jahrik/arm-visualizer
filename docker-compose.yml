@@ -9,4 +9,6 @@ services:
     ports:
       - 8081:8080
     deploy:
-      mode: global
+      replicated:
+      replicas: 2
+      # mode: global
