@@ -22,6 +22,26 @@ node('arm32v7') {
             sh "make push"
         }
 
+    } catch(error) {
+        throw error
+
+    } finally {
+        // Any cleanup operations needed, whether we hit an error or not
+
+    }
+}
+
+node('master') {
+
+    try {
+
+        stage('scm') {
+            // Clean workspace
+            deleteDir()
+            // Checkout the app at the given commit sha from the webhook
+            checkout scm
+        }
+
         stage('deploy') {
             sh "make deploy"
         }
