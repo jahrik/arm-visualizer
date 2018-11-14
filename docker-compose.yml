@@ -8,7 +8,22 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 8081:8080
+    networks:
+      - traefik
     deploy:
       mode: replicated
-      replicas: 1
-      # mode: global
+      replicas: 2
+      labels:
+        traefik.enable: 1
+        traefik.backend: visualizer
+        traefik.docker.network: traefik
+        traefik.port: 8080
+        traefik.frontend.rule: Host:visualizer.homelab.business
+      placement:
+        constraints:
+          - node.labels.arch == aarch64
+
+networks:
+  traefik:
+    driver: overlay
+    external: true
