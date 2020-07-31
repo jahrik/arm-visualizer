@@ -17,7 +17,7 @@ services:
         traefik.enable: 1
         traefik.backend: visualizer
         traefik.docker.network: traefik
-        traefik.port: 8080
+        traefik.http.services.visualizer.loadbalancer.server.port: 8080
         traefik.frontend.rule: Host:visualizer.homelab.business
       placement:
         constraints:
