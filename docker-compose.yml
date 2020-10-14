@@ -12,7 +12,7 @@ services:
       - traefik
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       labels:
         - traefik.enable=true
         - traefik.network=traefik
@@ -27,6 +27,7 @@ services:
       placement:
         constraints:
           - node.labels.arch == aarch64
+          - node.role == manager
 
 networks:
   traefik:
