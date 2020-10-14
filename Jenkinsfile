@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node('armv7l') {
+node('aarch64') {
 
     try {
 
@@ -32,7 +32,6 @@ node('manager') {
 
         stage('scm') {
             deleteDir()
-            // Checkout the app at the given commit sha from the webhook
             checkout scm
         }
 

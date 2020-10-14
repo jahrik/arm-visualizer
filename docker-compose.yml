@@ -3,7 +3,7 @@ version: '3'
 services:
 
   visualizer:
-    image: jahrik/arm-visualizer:arm32v7
+    image: jahrik/arm-visualizer:aarch64
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     # ports:
@@ -14,11 +14,16 @@ services:
       mode: replicated
       replicas: 2
       labels:
-        traefik.enable: 1
-        traefik.backend: visualizer
-        traefik.docker.network: traefik
-        traefik.http.services.visualizer.loadbalancer.server.port: 8080
-        traefik.frontend.rule: Host:visualizer.homelab.business
+        - traefik.enable=true
+        - traefik.network=traefik
+        - traefik.http.routers.visualizer.tls=true
+        - traefik.http.routers.visualizer.service=visualizer
+        - traefik.http.routers.visualizer.rule=Host(`visualizer.homelab.business`)
+        - traefik.http.routers.visualizer.middlewares=visualizer-auth
+        - traefik.http.routers.visualizer.entrypoints=web,websecure
+        - traefik.http.services.visualizer.loadbalancer.server.port=8080
+        - traefik.http.middlewares.visualizer-auth.basicauth.usersfile=/etc/traefik/.htpasswd
+
       placement:
         constraints:
           - node.labels.arch == aarch64

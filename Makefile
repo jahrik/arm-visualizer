@@ -1,5 +1,5 @@
 IMAGE = "jahrik/arm-visualizer"
-TAG = "arm32v7"
+TAG = "aarch64"
 
 all: build
 
